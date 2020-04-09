@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
-import { firestoreConnect } from 'react-redux-firebase';
-import Spinner from '../Layout/Spinner';
+import React, {Component} from "react";
+import {Link} from "react-router-dom";
+import PropTypes from "prop-types";
+import {compose} from "redux";
+import {connect} from "react-redux";
+import {firestoreConnect} from "react-redux-firebase";
+import Spinner from "../Layout/Spinner";
 
 class Clients extends Component {
   state = {
-    totalOwed: null
+    totalOwed: null,
   };
 
   static getDerivedStateFromProps(props, state) {
-    const { clients } = props;
+    const {clients} = props;
 
     if (clients) {
       // Add balances
@@ -20,15 +20,15 @@ class Clients extends Component {
         return total + parseFloat(client.balance.toString());
       }, 0);
 
-      return { totalOwed: total };
+      return {totalOwed: total};
     }
 
     return null;
   }
 
   render() {
-    const { clients } = this.props;
-    const { totalOwed } = this.state;
+    const {clients} = this.props;
+    const {totalOwed} = this.state;
 
     if (clients) {
       return (
@@ -36,13 +36,13 @@ class Clients extends Component {
           <div className="row">
             <div className="col-md-6">
               <h2>
-                {' '}
-                <i className="fas fa-users" /> Clients{' '}
+                {" "}
+                <i className="fas fa-users" /> Clients{" "}
               </h2>
             </div>
             <div className="col-md-6">
               <h5 className="text-right text-secondary">
-                Total Owed{' '}
+                Total Owed{" "}
                 <span className="text-danger">
                   R{parseFloat(totalOwed).toFixed(2)}
                 </span>
@@ -54,19 +54,22 @@ class Clients extends Component {
             <thead className="thead-inverse">
               <tr>
                 <th>Name</th>
-                <th>Email</th>
-                <th>Balance</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>Balance Due</th>
               </tr>
             </thead>
             <tbody>
-              {clients.map(client => (
+              {clients.map((client) => (
                 <tr key={client.id}>
                   <td>
                     {client.firstName} {client.lastName}
                   </td>
-                  <td>{client.email}</td>
+                  <td>{client.phone}</td>
+                  <td>{client.address}</td>
+
                   <td>
-                    R{parseFloat(client.balance).toFixed(2)}{' '}
+                    R{parseFloat(client.balance).toFixed(2)}{" "}
                     <Link
                       to={`/client/${client.id}`}
                       className="btn btn-secondary btn-sm"
@@ -88,12 +91,12 @@ class Clients extends Component {
 
 Clients.propTypes = {
   firestore: PropTypes.object.isRequired,
-  clients: PropTypes.array
+  clients: PropTypes.array,
 };
 
 export default compose(
-  firestoreConnect([{ collection: 'clients' }]),
+  firestoreConnect([{collection: "clients"}]),
   connect((state, props) => ({
-    clients: state.firestore.ordered.clients
+    clients: state.firestore.ordered.clients,
   }))
 )(Clients);

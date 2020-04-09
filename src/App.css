@@ -1,5 +1,5 @@
 body {
-  background: #ecf0f1;
+  background: #fff;
   animation: fadein 2s;
   -moz-animation: fadein 2s;
   -webkit-animation: fadein 2s;
@@ -7,11 +7,11 @@ body {
 }
 
 .navbar {
-  background: #2c3e50;
+  background: #3498db;
 }
 
 .btn-clr {
-  background: #2c3e50;
+  background: #838688;
 }
 .text-clr {
   color: #fff;
@@ -77,15 +77,15 @@ body {
 }
 /* end of landing fade */
 
-.card-bg {
-  background: url('./coins.jpg');
+/* .card-bg {
+  background: url("./coins.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
 .bg-img {
-  background: url('./money.jpg');
+  background: url("./money.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-}
+} */

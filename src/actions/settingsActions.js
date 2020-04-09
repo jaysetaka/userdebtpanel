@@ -1,55 +1,53 @@
-import { DISABLE_BALANCE_ON_ADD, DISABLE_BALANCE_ON_EDIT, ALLOW_REGISTRATION } from './types';
+import {
+  DISABLE_BALANCE_ON_ADD,
+  DISABLE_BALANCE_ON_EDIT,
+  ALLOW_REGISTRATION,
+} from "./types";
 
-export const  setDisableBalanceOnAdd = () => {
-
+export const setDisableBalanceOnAdd = () => {
   // Get settings from local storage
-  const settings = JSON.parse(localStorage.getItem('settings'));
+  const settings = JSON.parse(localStorage.getItem("settings"));
 
-  // Toggle 
-  settings.disableBalanceOnAdd = ! settings.disableBalanceOnAdd;
+  // Toggle
+  settings.disableBalanceOnAdd = !settings.disableBalanceOnAdd;
 
   // set back to local storage
-  localStorage.setItem('settings', JSON.stringify(settings));
+  localStorage.setItem("settings", JSON.stringify(settings));
 
   return {
     type: DISABLE_BALANCE_ON_ADD,
-    payload: settings.disableBalanceOnAdd
-  }
-}
+    payload: settings.disableBalanceOnAdd,
+  };
+};
 
 export const setDisableBalanceOneEdits = () => {
-
   // Get settings from local storage
-  const settings = JSON.parse(localStorage.getItem('settings'));
+  const settings = JSON.parse(localStorage.getItem("settings"));
 
-  // Toggle 
+  // Toggle
   settings.disableBalanceOnEdit = !settings.disableBalanceOnEdit;
 
   // set back to local storage
-  localStorage.setItem('settings', JSON.stringify(settings));
-
+  localStorage.setItem("settings", JSON.stringify(settings));
 
   return {
     type: DISABLE_BALANCE_ON_EDIT,
-    payload: settings.disableBalanceOnEdit
-  }
-}
-
+    payload: settings.disableBalanceOnEdit,
+  };
+};
 
 export const setAllowRegistration = () => {
-
   // Get settings from local storage
-  const settings = JSON.parse(localStorage.getItem('settings'));
+  const settings = JSON.parse(localStorage.getItem("settings"));
 
-  // Toggle 
+  // Toggle
   settings.allowRegistration = !settings.allowRegistration;
 
   // set back to local storage
-  localStorage.setItem('settings', JSON.stringify(settings));
+  localStorage.setItem("settings", JSON.stringify(settings));
 
   return {
     type: ALLOW_REGISTRATION,
-    payload: settings.allowRegistration
-  }
-}
-
+    payload: settings.allowRegistration,
+  };
+};

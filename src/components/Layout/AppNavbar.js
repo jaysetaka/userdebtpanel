@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 // import { compose } from 'redux';
 // import { connect } from 'react-redux';
-import { firebaseConnect } from 'react-redux-firebase';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
+import { firebaseConnect } from "react-redux-firebase";
+import { compose } from "redux";
+import { connect } from "react-redux";
 
 class AppNavbar extends Component {
   state = {
@@ -38,7 +38,7 @@ class AppNavbar extends Component {
       <nav className="navbar navbar-expand-md navbar-dark mb-4">
         <div className="container">
           <Link to="/" className="navbar-brand">
-            Debt Panel
+            Tshabalala's Debts Panel
           </Link>
 
           <button

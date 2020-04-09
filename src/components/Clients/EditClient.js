@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
-import { firestoreConnect } from 'react-redux-firebase';
-import Spinner from '../Layout/Spinner';
+import React, {Component} from "react";
+import PropTypes from "prop-types";
+import {Link} from "react-router-dom";
+import {compose} from "redux";
+import {connect} from "react-redux";
+import {firestoreConnect} from "react-redux-firebase";
+import Spinner from "../Layout/Spinner";
 
 class EditClient extends Component {
   constructor(props) {
@@ -14,13 +14,15 @@ class EditClient extends Component {
     this.lastNameInput = React.createRef();
     this.emailInput = React.createRef();
     this.phoneInput = React.createRef();
+    this.paymentduedateInput = React.createRef();
+    this.addressInput = React.createRef();
     this.balanceInput = React.createRef();
   }
 
-  onSubmit = e => {
+  onSubmit = (e) => {
     e.preventDefault();
 
-    const { client, firestore, history } = this.props;
+    const {client, firestore, history} = this.props;
 
     // Updates
     const updClient = {
@@ -28,22 +30,24 @@ class EditClient extends Component {
       lastName: this.lastNameInput.current.value,
       email: this.emailInput.current.value,
       phone: this.phoneInput.current.value,
+      paymentduedate: this.paymentduedateInput.current.value,
+      address: this.addressInput.current.value,
       balance:
-        this.balanceInput.current.value === ' '
+        this.balanceInput.current.value === " "
           ? 0
-          : this.balanceInput.current.value
+          : this.balanceInput.current.value,
     };
 
     // Update client in firestore
     firestore
-      .update({ collection: 'clients', doc: client.id }, updClient)
-      .then(history.push('/'));
+      .update({collection: "clients", doc: client.id}, updClient)
+      .then(history.push("/"));
   };
 
   render() {
-    const { client } = this.props;
+    const {client} = this.props;
 
-    const { disableBalanceOnEdit } = this.props.settings;
+    const {disableBalanceOnEdit} = this.props.settings;
 
     if (client) {
       return (
@@ -104,6 +108,26 @@ class EditClient extends Component {
                         defaultValue={client.phone}
                       />
                       <div className="form-group">
+                        <label htmlFor="address">Address</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          name="address"
+                          ref={this.addressInput}
+                          defaultValue={client.address}
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="paymentduedate">Payment Due Date</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          name="paymentduedate"
+                          ref={this.paymentduedateInput}
+                          defaultValue={client.paymentduedate}
+                        />
+                      </div>
+                      <div className="form-group">
                         <label htmlFor="balance">Balance</label>
                         <input
                           type="number"
@@ -136,15 +160,15 @@ class EditClient extends Component {
 
 EditClient.propTypes = {
   firestore: PropTypes.object.isRequired,
-  settings: PropTypes.object.isRequired
+  settings: PropTypes.object.isRequired,
 };
 
 export default compose(
-  firestoreConnect(props => [
-    { collection: 'clients', storeAs: 'client', doc: props.match.params.id }
+  firestoreConnect((props) => [
+    {collection: "clients", storeAs: "client", doc: props.match.params.id},
   ]),
-  connect(({ firestore: { ordered }, settings }, props) => ({
+  connect(({firestore: {ordered}, settings}, props) => ({
     client: ordered.client && ordered.client[0],
-    settings
+    settings,
   }))
 )(EditClient);

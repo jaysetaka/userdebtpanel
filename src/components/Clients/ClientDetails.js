@@ -1,48 +1,48 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
-import { firestoreConnect } from 'react-redux-firebase';
-import Spinner from '../Layout/Spinner';
-import classnames from 'classnames';
+import React, {Component} from "react";
+import PropTypes from "prop-types";
+import {Link} from "react-router-dom";
+import {compose} from "redux";
+import {connect} from "react-redux";
+import {firestoreConnect} from "react-redux-firebase";
+import Spinner from "../Layout/Spinner";
+import classnames from "classnames";
 
 class ClientDetails extends Component {
   state = {
     showBalanceUpdate: false,
-    balanceUpdateAmount: ''
+    balanceUpdateAmount: "",
   };
 
   // update balace
-  balanceSubmit = e => {
+  balanceSubmit = (e) => {
     e.preventDefault();
 
-    const { client, firestore } = this.props;
-    const { balanceUpdateAmount } = this.state;
+    const {client, firestore} = this.props;
+    const {balanceUpdateAmount} = this.state;
 
     const clientUpdate = {
-      balance: parseFloat(balanceUpdateAmount)
+      balance: parseFloat(balanceUpdateAmount),
     };
 
     // update in firestore
-    firestore.update({ collection: 'clients', doc: client.id }, clientUpdate);
+    firestore.update({collection: "clients", doc: client.id}, clientUpdate);
   };
   // delete client
   onDeleteClick = () => {
-    const { client, firestore, history } = this.props;
+    const {client, firestore, history} = this.props;
 
     firestore
-      .delete({ collection: 'clients', doc: client.id })
-      .then(history.push('/'));
+      .delete({collection: "clients", doc: client.id})
+      .then(history.push("/"));
   };
 
-  onChange = e => this.setState({ [e.target.name]: e.target.value });
+  onChange = (e) => this.setState({[e.target.name]: e.target.value});
 
   render() {
-    const { client } = this.props;
-    const { showBalanceUpdate, balanceUpdateAmount } = this.state;
+    const {client} = this.props;
+    const {showBalanceUpdate, balanceUpdateAmount} = this.state;
 
-    let balanceForm = '';
+    let balanceForm = "";
     // if balance form should display
     if (showBalanceUpdate) {
       balanceForm = (
@@ -99,17 +99,17 @@ class ClientDetails extends Component {
               <div className="row">
                 <div className="col-md-8 col-sm-6">
                   <h4>
-                    Client ID:{' '}
+                    Client ID:{" "}
                     <span className="text-secondary">{client.id}</span>
                   </h4>
                 </div>
                 <div className="col-md-4 col-sm-6">
                   <h3 className="pull-right">
-                    Balance:{' '}
+                    Balance:{" "}
                     <span
                       className={classnames({
-                        'text-danger': client.balance > 0,
-                        'text-success': client.balance === 0
+                        "text-danger": client.balance > 0,
+                        "text-success": client.balance === 0,
                       })}
                     >
                       R{parseFloat(client.balance).toFixed(2)}
@@ -119,11 +119,11 @@ class ClientDetails extends Component {
                         href="#!"
                         onClick={() =>
                           this.setState({
-                            showBalanceUpdate: !this.state.showBalanceUpdate
+                            showBalanceUpdate: !this.state.showBalanceUpdate,
                           })
                         }
                       >
-                        {' '}
+                        {" "}
                         <i className="fas fa-pencil-alt text-secondary" />
                       </a>
                     </small>
@@ -140,6 +140,12 @@ class ClientDetails extends Component {
                 <li className="list-group-item">
                   Contact Phone: {client.phone}
                 </li>
+                <li className="list-group-item">
+                  Contact Address: {client.address}
+                </li>
+                <li className="list-group-item">
+                  Payment Due Date: {client.paymentduedate}
+                </li>
               </ul>
             </div>
           </div>
@@ -152,14 +158,14 @@ class ClientDetails extends Component {
 }
 
 ClientDetails.propTypes = {
-  firestore: PropTypes.object.isRequired
+  firestore: PropTypes.object.isRequired,
 };
 
 export default compose(
-  firestoreConnect(props => [
-    { collection: 'clients', storeAs: 'client', doc: props.match.params.id }
+  firestoreConnect((props) => [
+    {collection: "clients", storeAs: "client", doc: props.match.params.id},
   ]),
-  connect(({ firestore: { ordered } }, props) => ({
-    client: ordered.client && ordered.client[0]
+  connect(({firestore: {ordered}}, props) => ({
+    client: ordered.client && ordered.client[0],
   }))
 )(ClientDetails);
