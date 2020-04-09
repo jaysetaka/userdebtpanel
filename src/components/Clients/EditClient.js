@@ -120,7 +120,7 @@ class EditClient extends Component {
                       <div className="form-group">
                         <label htmlFor="paymentduedate">Payment Due Date</label>
                         <input
-                          type="text"
+                          type="date"
                           className="form-control"
                           name="paymentduedate"
                           ref={this.paymentduedateInput}
